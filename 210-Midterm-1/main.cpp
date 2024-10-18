@@ -5,42 +5,42 @@ const int MIN_NR = 10, MAX_NR = 99, MIN_LS = 5, MAX_LS = 20;
 
 class DoublyLinkedList {
 private:
-    struct Node {
-        int data;
-        Node* prev;
-        Node* next;
-        Node(int val, Node* p = nullptr, Node* n = nullptr) {
-            data = val;
-            prev = p;
-            next = n;
+    struct Node {    // private member struct Node through which all nodes will be built
+        int data;    // data varaible will store an in in each node
+        Node* prev;    // prev pointer to point to the previous node in the doubly linked list
+        Node* next;    // next pointer to point to the next node in the doubly linked list
+        Node(int val, Node* p = nullptr, Node* n = nullptr) {    // Node constructor to be used when a new Node is created dynamically
+            data = val;    // the Node's int data value will be assigned to the value inputted in the constructor argument
+            prev = p;    // a new Node's prev pointer will intially point to nullptr
+            next = n;    // a new Node's next pointer will intially point to nullptr
         }
     };
 
-    Node* head;
-    Node* tail;
+    Node* head;    // private head member which will point to the start of the list in the doubly linked list
+    Node* tail;    // private tail member which will point to the start of the list in the doubly linked list
 
 public:
-    DoublyLinkedList() { head = nullptr; tail = nullptr; }
+    DoublyLinkedList() { head = nullptr; tail = nullptr; }    // Default constrcutor for doubly linked list, assigns the head & tail pointer to nullptr
 
-    void insert_after(int value, int position) {
-        if (position < 0) {
+    void insert_after(int value, int position) {    // Insert after function definiton takes in the value and position to search for in th list
+        if (position < 0) {    // if the position entered is less than 0, message returns
             cout << "Position must be >= 0." << endl;
             return;
         }
 
-        Node* newNode = new Node(value);
-        if (!head) {
-            head = tail = newNode;
+        Node* newNode = new Node(value);   // a new Node is dynamically allocated and used the Node constructor with value as arguemnt
+        if (!head) {    // if there is no value stored in head, the list is currently empty
+            head = tail = newNode;    // head & tail now point to newNode as the first/only Node in the list (the front & back)
             return;
         }
 
-        Node* temp = head;
-        for (int i = 0; i < position && temp; ++i)
-            temp = temp->next;
+        Node* temp = head;    // if the list is not empty, a temp pointer ponits to the head of the list
+        for (int i = 0; i < position && temp; ++i)    // for loop to get temp the proper position in the list based on the position arguemnt in the function call
+            temp = temp->next;    // temp moves ahead a node on each loop iteration
 
-        if (!temp) {
+        if (!temp) {    // if temp reaches the end of the list from the for loop, a message displays saying that the position entered exceeded the list size
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;
+            delete newNode;    // Node is not added tot he list and deleted to avoid memory leaks
             return;
         }
 
