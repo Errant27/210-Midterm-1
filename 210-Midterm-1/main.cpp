@@ -173,42 +173,71 @@ public:
         delete temp;    // contents of temp are deleted
     }
 
-    ~DoublyLinkedList() {
-        while (head) {
-            Node* temp = head;
-            head = head->next;
-            delete temp;
+    ~DoublyLinkedList() {    // Deoubly linked list class destructor
+        while (head) {    // while head stores a value (head != nullptr)
+            Node* temp = head;    // temp points to head
+            head = head->next;    // head assigns node ahead of it as new head
+            delete temp;    // contents of temp are deleted
         }
     }
-    void print() {
-        Node* current = head;
-        if (!current) {
+    void print() {    // function to print contents of the doubly linked list
+        Node* current = head;    // current pointer points to the head of list
+        if (!current) {    // if current stores no value, list is empty and message is outputted
             cout << "List is empty." << endl;
             return;
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->next;
+        while (current) {    // while current does store a value
+            cout << current->data << " ";    // contents (data) of current are outputted
+            current = current->next;    // current moves ahead in the list
         }
         cout << endl;
     }
 
-    void print_reverse() {
-        Node* current = tail;
-        if (!current) {
+    void print_reverse() {    // function to print contents of the doubly linked list in reverse
+        Node* current = tail;   // current pointer points to the tail of list
+        if (!current) {    // if current stores no value, list is empty and message is outputted
             cout << "List is empty." << endl;
             return;
         }
-        while (current) {
-            cout << current->data << " ";
-            current = current->prev;
+        while (current) {   // while current does store a value
+            cout << current->data << " ";    // contents (data) of current are outputted
+            current = current->prev;    // current moves beackward through the list
         }
         cout << endl;
     }
+    
+    // ADDED
+    void every_other_element() {    // function to print every other element the doubly linked list
+        Node* current = head;    // current pointer points to the head of list
+        if (!current) {    // if current stores no value, list is empty and message is outputted
+            cout << "List is empty." << endl;
+            return;
+        }
+        while (current) {  // while current does store a value
+            cout << current->data << " ";    // contents (data) of current are outputted
+            current = current->next->next;    // current moves one element ahead of the one after it
+        }
+        cout << endl;
+    }
+    
 };
 
 int main() {
     cout << MIN_NR + MIN_LS + MAX_NR + MAX_LS;  // dummy statement to avoid compiler warning
+    
+    DoublyLinkedList list;
+    int size = rand() % (MAX_LS-MIN_LS+1) + MIN_LS;
+
+    for (int i = 0; i < size; ++i)
+        list.push_back(rand() % (MAX_NR-MIN_NR+1) + MIN_NR);
+    
+    cout << "List: ";
+    list.print();
+    
+    cout << "Every other element: ";
+    list.every_other_element();
+    
+    list.~DoublyLinkedList();
 
     
     return 0;
