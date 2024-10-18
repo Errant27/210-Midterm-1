@@ -29,13 +29,13 @@ public:
     void insert_after(int value, int position) {
         if (position < 0) {    // if the position entered is less than 0, message returns
             cout << "Position must be >= 0." << endl;
-            return;
+            return;    // return 'breaks away' from function under these condiitions
         }
 
         Node* newNode = new Node(value);   // a new Node is dynamically allocated and used the Node constructor with value as arguemnt
         if (!head) {    // if there is no value stored in head, the list is currently empty
             head = tail = newNode;    // head & tail now point to newNode as the first/only Node in the list (the front & back)
-            return;
+            return;    // return 'breaks away' from function under these condiitions
         }
 
         Node* temp = head;    // if the list is not empty, a temp pointer ponits to the head of the list
@@ -44,8 +44,8 @@ public:
 
         if (!temp) {    // if temp reaches the end of the list from the for loop, a message displays saying that the position entered exceeded the list size
             cout << "Position exceeds list size. Node not inserted.\n";
-            delete newNode;    // Node is not added tot he list and deleted to avoid memory leaks
-            return;
+            delete newNode;    // Node is not added to the list and deleted to avoid memory leaks
+            return;    // return 'breaks away' from function under these condiitions
         }
 
         newNode->next = temp->next;    // newNode's next points to the next node based on temp's position
@@ -65,53 +65,53 @@ public:
         while (temp && temp->data != value)
             temp = temp->next;    // while temp is not at the end of the list and is not pointing at the node with the value, temp moves ahead in the list
 
-        if (!temp) return;    // if temp reach the end of the list, nothing occurs
+        if (!temp) return;    // if temp goes beyond the bounds of of the list, nothing occurs
 
         if (temp->prev)
-            temp->prev->next = temp->next;
+            temp->prev->next = temp->next;    // if temp has a node 'behind' it, that node's next pointer now points to the node aftet temp
         else
-            head = temp->next;
+            head = temp->next;    // if temp has no node 'behind' it, head now points to the node after it as the new 'head' of the list
 
         if (temp->next)
-            temp->next->prev = temp->prev;
+            temp->next->prev = temp->prev;    // if temp has a node 'ahead' it, that node's previous pointer now points to the node before temp
         else
-            tail = temp->prev;
+            tail = temp->prev;    // if temp has no node 'ahead' it, head now points to the node after it as the new 'tail' of the list
 
-        delete temp;
+        delete temp;    // temp is deleted from the list
     }
 
-    void delete_pos(int pos) {
+    void delete_pos(int pos) {    // delete pos function takes in a postion as an argument to delete the node which is in that position
         if (!head) {
-            cout << "List is empty." << endl;
-            return;
+            cout << "List is empty." << endl;    // if head is empty, the list is empty and a message is printed
+            return;    // return 'breaks away' from function under these condiitions
         }
     
         if (pos == 1) {
-            pop_front();
-            return;
+            pop_front();    // if the postition entered is the first position, the pop_front function is called
+            return;    // return 'breaks away' from function under these condiitions
         }
     
-        Node* temp = head;
+        Node* temp = head;    // if the position entered is greater than 1, temp points to the heead of the list
     
-        for (int i = 1; i < pos; i++){
-            if (!temp) {
+        for (int i = 1; i < pos; i++){    // for loop to get the temp pointer in the right postition in the list
+            if (!temp) {    // if temp exceeded past the end of the list, a message is printed notifying that tha position is invalid
                 cout << "Position doesn't exist." << endl;
-                return;
+                return;    // return 'breaks away' from function under these condiitions
             }
             else
-                temp = temp->next;
+                temp = temp->next;    // temp moves through the list on each loop iteration
         }
-        if (!temp) {
+        if (!temp) {   // same code as he temp went beyond the bounds of the list in the for loop
             cout << "Position doesn't exist." << endl;
             return;
         }
     
         if (!temp->next) {
-            pop_back();
+            pop_back();    // if temp has reached the end (tail) of the lsit, the pop_back function is called
             return;
         }
     
-        Node* tempPrev = temp->prev;
+        Node* tempPrev = temp->prev;    // tempPrev pointer points to the previous node relative to temp's location
         tempPrev->next = temp->next;
         temp->next->prev = tempPrev;
         delete temp;
