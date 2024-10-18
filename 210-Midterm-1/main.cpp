@@ -1,3 +1,5 @@
+// 210 | Midterm #1 | Neil Orton
+// IDE used: Xcode
 #include <iostream>
 using namespace std;
 
@@ -22,7 +24,9 @@ private:
 public:
     DoublyLinkedList() { head = nullptr; tail = nullptr; }    // Default constrcutor for doubly linked list, assigns the head & tail pointer to nullptr
 
-    void insert_after(int value, int position) {    // Insert after function definiton takes in the value and position to search for in th list
+    // Insert after function definiton takes in the value and position to search for in the list
+    // function will insert a node 1 positon after the on sent in as and arguemnt
+    void insert_after(int value, int position) {
         if (position < 0) {    // if the position entered is less than 0, message returns
             cout << "Position must be >= 0." << endl;
             return;
@@ -44,24 +48,24 @@ public:
             return;
         }
 
-        newNode->next = temp->next;
-        newNode->prev = temp;
+        newNode->next = temp->next;    // newNode's next points to the next node based on temp's position
+        newNode->prev = temp;    // newNode's prev pointer points to temp's current position
         if (temp->next)
-            temp->next->prev = newNode;
-        else
+            temp->next->prev = newNode;    // if temp's next pointer is not pointing to nullptr,
+        else                               // the node ahead of next will point to the new Node with it's prev pointer
             tail = newNode;
-        temp->next = newNode;
-    }
+        temp->next = newNode;    // else, tail now points to newNode as the end (tail) of the list
+    }                            // and temp assign's newNode as the the Node after it
 
-    void delete_val(int value) {
-        if (!head) return;
+    void delete_val(int value) {    // delete val function takes in a value as an argument to delete the node which holds that value
+        if (!head) return;    // if head does not hold a value, list is empty, and nothing is done
 
-        Node* temp = head;
+        Node* temp = head;    // temp pointer poniter points to start of the list
         
         while (temp && temp->data != value)
-            temp = temp->next;
+            temp = temp->next;    // while temp is not at the end of the list and is not pointing at the node with the value, temp moves ahead in the list
 
-        if (!temp) return;
+        if (!temp) return;    // if temp reach the end of the list, nothing occurs
 
         if (temp->prev)
             temp->prev->next = temp->next;
