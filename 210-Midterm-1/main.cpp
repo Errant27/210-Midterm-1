@@ -77,7 +77,7 @@ public:
         else
             tail = temp->prev;    // if temp has no node 'ahead' it, head now points to the node after it as the new 'tail' of the list
 
-        delete temp;    // temp is deleted from the list
+        delete temp;    // contents of temp are deleted
     }
 
     void delete_pos(int pos) {    // delete pos function takes in a postion as an argument to delete the node which is in that position
@@ -112,65 +112,65 @@ public:
         }
     
         Node* tempPrev = temp->prev;    // tempPrev pointer points to the previous node relative to temp's location
-        tempPrev->next = temp->next;
-        temp->next->prev = tempPrev;
-        delete temp;
+        tempPrev->next = temp->next;    // tempPrev's next pointer points to the node after temp's curent location
+        temp->next->prev = tempPrev;    // the prev poniter for the node ahead of temp points to tempPrev (node 'behind' temp)
+        delete temp;    // contents of temp are deleted
     }
 
-    void push_back(int v) {
-        Node* newNode = new Node(v);
-        if (!tail)
-            head = tail = newNode;
+    void push_back(int v) {    // function to push a node to the back the doubly linked list
+        Node* newNode = new Node(v);    // newNode is constructed using the Nod constructor with v passed as the data
+        if (!tail)    // if the tail pointer stores no value (nothing is at the end of te list)
+            head = tail = newNode;    // head & tail point to the newNode as first (current only) node in the lsit
         else {
-            tail->next = newNode;
-            newNode->prev = tail;
-            tail = newNode;
+            tail->next = newNode;    // else, the current end of the list points to the newNode as the node after it
+            newNode->prev = tail;    // newNode points to current tail as its previous node
+            tail = newNode;    // tail points to the new node as the new 'tail' of the list
         }
     }
     
-    void push_front(int v) {
-        Node* newNode = new Node(v);
-        if (!head)
-            head = tail = newNode;
+    void push_front(int v) {    // function to push front a node to the front in the doubly linked list
+        Node* newNode = new Node(v);    // newNode is constructed using the Nod constructor with v passed as the data
+        if (!head)    // if the head pointer stores no value (nothing is at the front of te list)
+            head = tail = newNode;   // head & tail point to the newNode as first (current only) node in the lsit
         else {
-            newNode->next = head;
-            head->prev = newNode;
-            head = newNode;
+            newNode->next = head;    // else, the current front of the list points to the newNode as the node after it
+            head->prev = newNode;    // newNode points to current head as its previous node
+            head = newNode;    // head points to the new node as the new 'tail' of the list
         }
     }
     
-    void pop_front() {
+    void pop_front() {    // function to pop a node to the front in the doubly linked list
 
-        if (!head) {
+        if (!head) {    // if the head pointer stores no value, list is empty and message is outputted
             cout << "List is empty." << endl;
             return;
         }
 
-        Node * temp = head;
+        Node * temp = head;    //if the list is not empty, temp points to head of the list
 
-        if (head->next) {
-            head = head->next;
-            head->prev = nullptr;
+        if (head->next) {    // if the head has a node after it
+            head = head->next;    // head pointer assigns the node ahead of it as the new head
+            head->prev = nullptr;    // head assigns it prev pointer to point to nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr;    // if head has no node after it (only one node in the list), head & tail point to nullptr
+        delete temp;    // contents of temp are deleted
     }
 
-    void pop_back() {
-        if (!tail) {
+    void pop_back() {    // function to pop a node to the end in the doubly linked list
+        if (!tail) {    // if the tail pointer stores no value, list is empty and message is outputted
             cout << "List is empty." << endl;
             return;
         }
-        Node * temp = tail;
+        Node * temp = tail;    // if the list is not empty, temp points to head of the list
 
-        if (tail->prev) {
-            tail = tail->prev;
-            tail->next = nullptr;
+        if (tail->prev) {    // if the tail has a node before it
+            tail = tail->prev;   // tail pointer assigns the node behind of it as the new tail
+            tail->next = nullptr;    // tail assigns its next pointer to point to nullptr
         }
         else
-            head = tail = nullptr;
-        delete temp;
+            head = tail = nullptr;    // if head has no node after it (only one node in the list), head & tail point to nullptr
+        delete temp;    // contents of temp are deleted
     }
 
     ~DoublyLinkedList() {
